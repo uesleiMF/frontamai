@@ -3,8 +3,8 @@ import Cookie from 'js-cookie';
 import {
     USER_SIGNIN_REQUEST, USER_SIGNIN_SUCCESS,
     USER_SIGNIN_FAIL, USER_REGISTER_REQUEST,
-    USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL
-} from "./constants";
+    USER_REGISTER_SUCCESS, USER_REGISTER_FAIL, USER_LOGOUT, USER_UPDATE_REQUEST, USER_UPDATE_SUCCESS, USER_UPDATE_FAIL, ADD_TO_CART_USER
+} from "../constants/userConstants";
 
 const update = ({ userId, name, email, password }) => async (dispatch, getState) => {
     const { userSignin: { userInfo } } = getState();
@@ -50,5 +50,14 @@ const logout = () => (dispatch) => {
     dispatch({ type: USER_LOGOUT })
 }
 
+const addToCart = (_id) => {
+    const request = Axios.post(`http://localhost:8000/api/users2/addToCart?productId=${_id}`)
+        .then(response => response.data);
 
-export { signin, register, logout, update };
+    return {
+        type: ADD_TO_CART_USER,
+        payload: request
+    }
+}
+
+export { signin, register, logout, update, addToCart};

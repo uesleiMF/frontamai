@@ -1,44 +1,53 @@
 import React, { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import { useSelector, useDispatch } from 'react-redux';
-import { signin } from '../store/actions';
+import { register } from '../../store/actions/userActions';
 
-function Login(props) {
+function RegisterScreen(props) {
 
+    const [name, setName] = useState('');
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
-    const userSignin = useSelector(state => state.userSignin);
-    const { loading, userInfo, error } = userSignin;
+    const [rePassword, setRePassword] = useState('');
+    const userRegister = useSelector(state => state.userRegister);
+    const { loading, userInfo, error } = userRegister;
     const dispatch = useDispatch();
+
     const redirect = props.location.search ? props.location.search.split("=")[1] : '/';
     useEffect(() => {
         if (userInfo) {
             props.history.push(redirect);
         }
         return () => {
-    
+            //
         };
     }, [userInfo]);
 
     const submitHandler = (e) => {
         e.preventDefault();
-        dispatch(signin(email, password));
-
+        dispatch(register(name, email, password));
     }
 
-    console.log('sigin--', props);
+    console.log("registe",props);
     return <div className="container login-box">
+            <h2>Create Account</h2>
         <form onSubmit={submitHandler} >
-            <h2>Sign-In</h2>
             <div className="form-container">
                 <div>
                     {loading && <div>Loading...</div>}
                     {error && <div>{error}</div>}
                 </div>
                 <div className='input-feild '>
+                    <label htmlFor="name">
+                        Name
+                    </label>
+                    <input  name="name" id="name" onChange={(e) => setName(e.target.value)}>
+                    </input>
+                </div>
+                <div className='input-feild '>
                     <label htmlFor="email">
                         Email
-                        </label>
+                </label>
                     <input type="email" name="email" id="email" onChange={(e) => setEmail(e.target.value)}>
                     </input>
                 </div>
@@ -47,18 +56,17 @@ function Login(props) {
                     <input type="password" id="password" name="password" onChange={(e) => setPassword(e.target.value)}>
                     </input>
                 </div>
+                <div className='input-feild '>
+                    <label htmlFor="rePassword">Re-Enter Password</label>
+                    <input type="password" id="rePassword" name="rePassword" onChange={(e) => setRePassword(e.target.value)}>
+                    </input>
+                </div>
                 <div className='button-box'>
-                    <button type="submit" className='btn waves-effect red lighten-2'>Log In</button>
+                    <button type="submit" className='btn waves-effect red lighten-2'>Register</button>
                     <div className='reg-box'>
-                        New to E-Shop?
-                        <Link to={redirect === "/profile" ? "register" : "register?redirect=" + redirect} >
-                            <button className='btn waves-effect red lighten-2'
-                                type='submit'
-                                name='action'
-                            >
-                                Sign Up
-                                    </button>
-                        </Link>
+                        Already have an account?
+                    <Link to={redirect === "/" ? "signin" : "signin?redirect=" + redirect} className='btn waves-effect red lighten-2' >Log In</Link>
+
                     </div>
                 </div>
 
@@ -66,4 +74,4 @@ function Login(props) {
         </form>
     </div>
 }
-export default Login;
+export default RegisterScreen;

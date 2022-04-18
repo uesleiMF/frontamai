@@ -11,3 +11,5 @@ export const USER_REGISTER_SUCCESS = 'USER_REGISTER_SUCCESS';
 export const USER_REGISTER_FAIL = 'USER_REGISTER_FAIL';
 
 export const USER_LOGOUT = 'USER_LOGOUT';
+
+export const ADD_TO_CART_USER = 'add_to_cart_user';

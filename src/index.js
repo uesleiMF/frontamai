@@ -1,9 +1,10 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter } from "react-router-dom";
 import './index.css';
-import App from './App';
+import { BrowserRouter } from "react-router-dom";
+import App from './component/App';
 import * as serviceWorker from './serviceWorker';
+// import 'materialize-css/dist/css/materialize.min.css';
 
 ReactDOM.render(
   <BrowserRouter>
